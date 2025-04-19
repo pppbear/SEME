@@ -1,0 +1,10 @@
+基于重要特征的简化回归方程 (uhi_day_c):
+R² 决定系数: 0.3545
+RMSE 均方根误差: 0.5968
+MAE 平均绝对误差: 0.2905
+
+使用特征 (9个):
+POI购物, 容积率, POI体育, Land50234, Land505, vegetation, railway_m, Land01, Subway_m
+
+简化回归方程:
+uhi_day_c = 0.2796 + 0.0719 * POI购物 + 0.4901 * 容积率 - 0.1554 * POI体育 - 0.0373 * Land50234 - 0.0408 * Land505 + 0.0034 * vegetation + 0.0883 * railway_m + 0.0019 * Land01 + 0.0248 * Subway_m

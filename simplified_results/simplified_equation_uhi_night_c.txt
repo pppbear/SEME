@@ -1,0 +1,10 @@
+基于重要特征的简化回归方程 (uhi_night_c):
+R² 决定系数: 0.2860
+RMSE 均方根误差: 0.2226
+MAE 平均绝对误差: 0.1175
+
+使用特征 (9个):
+Land505, Subway_m, 容积率, PNT_COUNT, Land50234, LENGTH_1, POI体育, Land01, vegetation
+
+简化回归方程:
+uhi_night_c = 0.0741 - 0.0093 * Land505 - 0.0033 * Subway_m + 0.1306 * 容积率 - 0.0215 * PNT_COUNT - 0.0054 * Land50234 - 0.0117 * LENGTH_1 - 0.0203 * POI体育 + 0.0243 * Land01 - 0.0025 * vegetation
