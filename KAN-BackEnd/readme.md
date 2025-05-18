@@ -44,6 +44,7 @@ uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 ### 3. 访问接口
 - API 网关默认端口：8000
 - 认证服务默认端口：8001
+- 个人中心服务默认端口：8002
 
 ## 目录结构
 ```
@@ -52,6 +53,5 @@ auth_service/        # 认证服务
 common_db/           # 共享数据库与工具
 environment.yml      # 环境依赖文件
 readme.md            # 项目说明
-start_all_services.bat  # Windows 测试脚本，用于统一开启所有服务端口
 ```
 
