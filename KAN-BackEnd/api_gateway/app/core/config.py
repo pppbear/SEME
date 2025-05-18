@@ -34,7 +34,7 @@ class Settings(BaseSettings):
 
 
     # >>>>>>>>>>>>>>> CORS跨域配置 <<<<<<<<<<<<<<<<
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = ["http://127.0.0.1"]
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = ["http://localhost:5173"]
     # 允许的跨域请求来源列表
     # 类型：AnyHttpUrl确保必须是合法URL格式
 
