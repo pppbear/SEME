@@ -1,11 +1,11 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from services.predictor import predict_from_excel
 from schemas.predict import PredictResponse
-from schemas.analyze import AnalyzeResponse, VariableImportance
-from services.analyzer import analyze_variables_with_kan
+from schemas.data import DataResponse, DataRow
+from services.data_loader import load_data_by_target
 
 app = FastAPI(
     title="上海市宜居性分析后端API",
@@ -42,20 +42,16 @@ async def predict(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/api/analyze", response_model=AnalyzeResponse)
-async def analyze(
-    file: UploadFile = File(..., description="需要上传的 Excel 文件"),
-    target: str = Form(..., description="目标因变量名称")
+
+@app.get("/api/data", response_model=DataResponse)
+async def get_data(
+    target: str = Query(..., description="目标因变量（nighttime_、lst_day_c、lst_night_ 三选一）")
 ):
-    if not file.filename:
-        raise HTTPException(status_code=400, detail="文件名为空")
-    os.makedirs('uploads', exist_ok=True)
-    filepath = os.path.join('uploads', file.filename)
-    with open(filepath, "wb") as f:
-        f.write(await file.read())
+    if target not in ['nighttime_', 'lst_day_c', 'lst_night_']:
+        raise HTTPException(status_code=400, detail="目标因变量不合法")
     try:
-        importances = analyze_variables_with_kan(filepath, target)
-        os.remove(filepath)
-        return AnalyzeResponse(importances=[VariableImportance(**imp) for imp in importances])
+        data = load_data_by_target(target)
+        return DataResponse(data=[DataRow(**item) for item in data])
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) 
+        raise HTTPException(status_code=500, detail=str(e))
+
