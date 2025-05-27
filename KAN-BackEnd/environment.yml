@@ -1,0 +1,38 @@
+name: kan-backend
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.9.21
+  - pip
+  - sqlite
+  - ca-certificates
+  - openssl
+  - wheel
+  - setuptools
+  - scikit-learn=1.3.0
+  - pandas
+  - numpy
+  - pytorch
+  - joblib
+  - openpyxl
+  - pip:
+      - --index-url https://mirrors.aliyun.com/pypi/simple/
+      - fastapi==0.104.1
+      - uvicorn==0.23.2
+      - sqlalchemy==2.0.23
+      - alembic==1.12.1
+      - pydantic==1.10.13
+      - python-jose==3.3.0
+      - passlib==1.7.4
+      - email-validator==2.0.0
+      - python-multipart==0.0.6
+      - httpx==0.25.1
+      - pytest==7.4.3
+      - requests==2.32.3
+      - bcrypt==4.0.1
+      - jinja2==3.1.6
+      - markupsafe==3.0.2
+      - attrs==25.3.0
+      - anyio==3.7.1
+      - starlette==0.27.0
