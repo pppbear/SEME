@@ -38,19 +38,29 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 cd ../auth_service
 uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 
+# 启动 compare_service
+cd ../compare_service
+uvicorn main:app --host 0.0.0.0 --port 8002 --reload
+
+# 启动 data_service
+cd ../data_service
+uvicorn main:app --host 0.0.0.0 --port 8003 --reload
 
 ```
 
 ### 3. 访问接口
 - API 网关默认端口：8000
 - 认证服务默认端口：8001
-- 个人中心服务默认端口：8002
+- 模型对比服务默认端口：8002
+- 栅格数据服务默认端口：8003
 
 ## 目录结构
 ```
 api_gateway/         # API 网关服务
 auth_service/        # 认证服务
 common_db/           # 共享数据库与工具
+compare_service/     # 模型对比服务
+data_service/        # 栅格数据服务
 environment.yml      # 环境依赖文件
 readme.md            # 项目说明
 ```
