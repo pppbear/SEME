@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "crud", "models") # 模型目录路径
     MLP_MODEL_DIR: str = os.path.join(MODEL_DIR, "mlp") # MLP模型目录
     RF_MODEL_DIR: str = os.path.join(MODEL_DIR, "rf")   # RF模型目录
+    KAN_MODEL_DIR: str = os.path.join(MODEL_DIR, "kan") # KNN模型目录
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）
