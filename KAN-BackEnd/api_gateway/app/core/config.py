@@ -59,7 +59,11 @@ class Settings(BaseSettings):
     AUTH_SERVICE_URL: str = "http://localhost:8001"
     # 认证服务地址
 
-    #TODO: 上海市宜居性系统其他服务地址
+    COMPARE_SERVICE_URL: str = "http://localhost:8002"
+    # 模型对比服务地址
+
+    DATA_SERVICE_URL: str = "http://localhost:8003"
+    # 数据服务地址
 
 
 # 全局配置实例

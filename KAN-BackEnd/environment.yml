@@ -36,3 +36,5 @@ dependencies:
       - attrs==25.3.0
       - anyio==3.7.1
       - starlette==0.27.0
+      - pyyaml
+      - matplotlib

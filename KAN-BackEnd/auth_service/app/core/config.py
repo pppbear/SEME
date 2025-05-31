@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     """
 
     # >>>>>>>>>>>>>>> API 基础配置 <<<<<<<<<<<<<<<<
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str = "/api/v1/auth"
     # API 接口前缀，用于路由分组和文档生成
 
     # 简化密钥，确保两个服务使用完全相同的字符串

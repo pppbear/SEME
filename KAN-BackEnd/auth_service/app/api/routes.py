@@ -19,10 +19,10 @@ from app.crud.user import (
 from app.utils.email import send_verification_code
 
 # 创建API路由实例
-api_router = APIRouter()
+auth_router = APIRouter()
 
 
-@api_router.post("/auth/login", 
+@auth_router.post("/login", 
                  summary="用户登录",
                  description="通过用户名或邮箱和密码获取访问令牌",
                  response_model=dict)
@@ -83,7 +83,7 @@ async def login_for_access_token(
     }
 
 
-@api_router.post("/auth/oauth-login", 
+@auth_router.post("/oauth-login", 
                  summary="OAuth2表单登录",
                  description="支持OAuth2标准表单登录")
 async def oauth_login(
@@ -128,7 +128,7 @@ async def oauth_login(
     }
 
 
-@api_router.post("/auth/register/send-code",
+@auth_router.post("/register/send-code",
                  summary="发送注册验证码",
                  description="向指定邮箱发送注册验证码")
 async def send_register_code(
@@ -164,7 +164,7 @@ async def send_register_code(
     }
 
 
-@api_router.post("/auth/register", 
+@auth_router.post("/register", 
                  summary="用户注册",
                  description="通过邮箱验证码注册新用户")
 async def register_user(
@@ -221,7 +221,7 @@ async def register_user(
     }
 
 
-@api_router.post("/auth/reset-password/send-code",
+@auth_router.post("/reset-password/send-code",
                 summary="发送密码重置验证码",
                 description="向指定邮箱发送密码重置验证码")
 async def send_reset_password_code(
@@ -257,7 +257,7 @@ async def send_reset_password_code(
     }
 
 
-@api_router.post("/auth/reset-password",
+@auth_router.post("/reset-password",
                 summary="重置密码",
                 description="通过邮箱验证码重置密码")
 async def reset_user_password(
@@ -282,29 +282,3 @@ async def reset_user_password(
         "code": 200,
         "message": "密码重置成功，请使用新密码登录"
     }
-
-
-# @api_router.get("/auth/users/me")
-# async def read_users_me(
-#     current_user: UserModel = Depends(deps.get_current_user)
-# ):
-#     """获取当前用户信息
-#     安全逻辑：
-#       - 通过JWT令牌自动验证用户身份
-#       - 仅返回已登录用户自身信息
-#     """
-#     # 转换用户对象为API响应格式
-#     user_data = {
-#         "id": current_user.id,
-#         "username": current_user.username,
-#         "email": current_user.email,
-#         "is_active": current_user.is_active,
-#         "role": "admin" if current_user.is_superuser else "user",
-#         "created_at": current_user.created_at.isoformat() if hasattr(current_user, 'created_at') and current_user.created_at else None
-#     }
-    
-#     return {
-#         "code": 200,
-#         "message": "用户个人信息获取成功",
-#         "data": user_data
-#     } 

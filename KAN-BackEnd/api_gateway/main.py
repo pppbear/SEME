@@ -13,6 +13,8 @@ from app.core.config import settings # 系统配置
 # 调试信息
 print("===== API网关启动 =====")
 print(f"认证服务URL: {settings.AUTH_SERVICE_URL}")
+print(f"模型对比服务URL: {settings.COMPARE_SERVICE_URL}")
+print(f"栅格数据服务URL: {settings.DATA_SERVICE_URL}")
 print(f"CORS配置: {settings.BACKEND_CORS_ORIGINS}")
 
 # ------------------------- FastAPI应用初始化 -------------------------
@@ -49,6 +51,8 @@ CORS策略说明：
 app.include_router(api_router, prefix=settings.API_V1_STR)
 print(f"API路由注册完成，前缀: {settings.API_V1_STR}")
 print(f"认证转发路由: {settings.API_V1_STR}/auth/*")
+print(f"模型对比转发路由: {settings.API_V1_STR}/compare/*")
+print(f"栅格数据转发路由: {settings.API_V1_STR}/data/*")
 """
 路由挂载说明：
 - api_router: 来自routes.py的所有路由

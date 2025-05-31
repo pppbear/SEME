@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     """
 
     # >>>>>>>>>>>>>>> API 基础配置 <<<<<<<<<<<<<<<<
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str = "/api/v1/compare"
     # API 接口前缀，用于路由分组和文档生成
 
     # 简化密钥，确保两个服务使用完全相同的字符串
@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "crud", "models") # 模型目录路径
     MLP_MODEL_DIR: str = os.path.join(MODEL_DIR, "mlp") # MLP模型目录
     RF_MODEL_DIR: str = os.path.join(MODEL_DIR, "rf")   # RF模型目录
+    KAN_MODEL_DIR: str = os.path.join(MODEL_DIR, "kan") # KNN模型目录
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）
