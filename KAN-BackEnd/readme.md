@@ -25,6 +25,12 @@ conda env create -f environment.yml
 conda activate kan-backend
 ```
 > 注：若使用 vscode，需要配置 `python解释器`
+>
+> 若需更新环境，则：
+>
+> ```bash
+> conda env update -f environment.yml
+> ```
 
 ### 2. 启动各服务（使用 uvicorn）
 分别进入各服务目录，运行如下命令：

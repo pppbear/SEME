@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 import httpx
 from app.core.config import settings
 
@@ -43,7 +43,7 @@ async def auth_proxy(path: str, request: Request):
         - request: 原始请求对象（自动注入）
     """
     async with httpx.AsyncClient() as client:
-        # 拼接目标地址，例如：http://auth_service:8001/api/v1/login
+        # 拼接目标地址
         url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth/{path}"
 
         # 转换FastAPI Request为httpx请求
@@ -61,11 +61,99 @@ async def auth_proxy(path: str, request: Request):
             params=dict(request.query_params)
         )
 
-        # 将响应包装为FastAPI的JSONResponse
-        return JSONResponse(
-            content=response.json(),
-            status_code=response.status_code
+        # 健壮处理响应内容
+        try:
+            content = response.json()
+            return JSONResponse(content=content, status_code=response.status_code)
+        except Exception:
+            return Response(
+                content=response.text,
+                status_code=response.status_code,
+                media_type=response.headers.get("content-type", "text/plain")
+            )
+
+# 模型对比代理
+@api_router.api_route("/compare/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
+async def compare_proxy(path: str, request: Request):
+    """模型对比服务代理
+    功能：将/compare开头的请求转发到模型对比微服务
+    实现逻辑：
+        1. 动态拼接目标URL（从配置获取COMPARE_SERVICE_URL）
+        2. 使用httpx异步转发原始请求
+        3. 将响应原样返回给客户端
+    参数：
+        - path: URL路径的通配符
+        - request: 原始请求对象（自动注入）
+    """
+    async with httpx.AsyncClient() as client:
+        # 拼接目标地址，例如：http://compare_service:8002/api/v1/compare
+        url = f"{settings.COMPARE_SERVICE_URL}/api/v1/compare/{path}"
+
+        # 转换FastAPI Request为httpx请求
+        headers = dict(request.headers)
+
+        # 获取请求体
+        body = await request.body() if request.method in ["POST", "PUT"] else None
+        
+        # 转发请求（保留方法、头、参数、体）
+        response = await client.request(
+            method=request.method,
+            url=url,
+            headers=headers,
+            content=body,
+            params=dict(request.query_params)
         )
 
+        # 健壮处理响应内容
+        try:
+            content = response.json()
+            return JSONResponse(content=content, status_code=response.status_code)
+        except Exception:
+            return Response(
+                content=response.text,
+                status_code=response.status_code,
+                media_type=response.headers.get("content-type", "text/plain")
+            )
 
-#TODO: 上海市宜居性系统服务代理
+# 数据服务代理
+@api_router.api_route("/data/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
+async def data_proxy(path: str, request: Request):
+    """数据服务代理
+    功能：将/data开头的请求转发到数据微服务
+    实现逻辑：
+        1. 动态拼接目标URL（从配置获取DATA_SERVICE_URL）
+        2. 使用httpx异步转发原始请求
+        3. 将响应原样返回给客户端
+    参数：
+        - path: URL路径的通配符
+        - request: 原始请求对象（自动注入）
+    """
+    async with httpx.AsyncClient() as client:
+        # 拼接目标地址，例如：http://data_service:8003/api/v1/data
+        url = f"{settings.DATA_SERVICE_URL}/api/v1/data/{path}"
+
+        # 转换FastAPI Request为httpx请求
+        headers = dict(request.headers)
+
+        # 获取请求体
+        body = await request.body() if request.method in ["POST", "PUT"] else None
+        
+        # 转发请求（保留方法、头、参数、体）
+        response = await client.request(
+            method=request.method,
+            url=url,
+            headers=headers,
+            content=body,
+            params=dict(request.query_params)
+        )
+
+        # 健壮处理响应内容
+        try:
+            content = response.json()
+            return JSONResponse(content=content, status_code=response.status_code)
+        except Exception:
+            return Response(
+                content=response.text,
+                status_code=response.status_code,
+                media_type=response.headers.get("content-type", "text/plain")
+            )

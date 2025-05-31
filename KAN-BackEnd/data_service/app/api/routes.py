@@ -12,15 +12,15 @@ data_router = APIRouter()
 
 @data_router.get("/get_data", response_model=DataResponse)
 async def get_data(
-    target: str = Query(..., description="目标因变量（nighttime_、lst_day_c、lst_night_c 三选一）")
+    data: str = Query(..., description="目标因变量（nighttime_、lst_day_c、lst_night_c 三选一）")
 ):
     """
     接收目标因变量，返回栅格数据。
     """
-    if target not in ['nighttime_', 'lst_day_c', 'lst_night_c']:
+    if data not in ['nighttime_', 'lst_day_c', 'lst_night_c']:
         raise HTTPException(status_code=400, detail="目标因变量不合法")
     try:
-        data = load_data_by_target(target)
+        data = load_data_by_target(data)
         return DataResponse(data=[DataRow(**item) for item in data])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
