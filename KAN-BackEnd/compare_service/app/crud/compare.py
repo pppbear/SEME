@@ -9,27 +9,14 @@ import joblib
 from typing import List
 from ..core.config import settings
 from ..schemas.compare import CompareResult
-from app.utils.kan.MultKAN import KAN
+from common_utils.kan.MultKAN import KAN
 import pickle
 import sys
+from .model_cache import MLPRegressor, get_mlp_model, get_scaler
 
 # 配置日志
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("predictor_utils")
-
-# MLP模型定义
-class MLPRegressor(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super(MLPRegressor, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_dim, 64),
-            nn.ReLU(),
-            nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, output_dim)
-        )
-    def forward(self, x):
-        return self.model(x)
 
 def analyze_and_predict(
     df: pd.DataFrame,
@@ -67,8 +54,8 @@ def analyze_and_predict(
         scaler_y_rf_path = os.path.join(settings.RF_MODEL_DIR, f"scaler_y_{target_dependent_var}.save")
 
         # 3. 加载scaler
-        scaler_X = joblib.load(scaler_x_path) if os.path.exists(scaler_x_path) else joblib.load(scaler_x_rf_path)
-        scaler_Y = joblib.load(scaler_y_path) if os.path.exists(scaler_y_path) else joblib.load(scaler_y_rf_path)
+        scaler_X = get_scaler(scaler_x_path) if os.path.exists(scaler_x_path) else get_scaler(scaler_x_rf_path)
+        scaler_Y = get_scaler(scaler_y_path) if os.path.exists(scaler_y_path) else get_scaler(scaler_y_rf_path)
         X_scaled = scaler_X.transform(X)
 
         # 4. 真实值
@@ -78,9 +65,8 @@ def analyze_and_predict(
 
         # 5. MLP预测
         output_dim = scaler_Y.mean_.shape[0] if hasattr(scaler_Y, 'mean_') else 1
-        mlp_model = MLPRegressor(X_scaled.shape[1], output_dim)
-        mlp_model.load_state_dict(torch.load(mlp_model_path, map_location=torch.device('cpu')))
-        mlp_model.eval()
+        hidden_layers = [(1024, 'relu'), (1024, 'relu')]
+        mlp_model = get_mlp_model(mlp_model_path, X_scaled.shape[1], output_dim, hidden_layers)
         with torch.no_grad():
             X_tensor = torch.tensor(X_scaled, dtype=torch.float32)
             y_pred_mlp = mlp_model(X_tensor).numpy()
