@@ -5,10 +5,11 @@ import json
 
 from app.schemas.compare import CompareResponse, CompareResult
 from app.crud.compare import analyze_and_predict
-from app.utils.file import read_excel_file
+from common_utils.file import read_excel_file
 
 compare_router = APIRouter()
 
+# 模型对比接口
 @compare_router.post("/model_compare", response_model=CompareResponse)
 async def compare_endpoint(
     file: UploadFile = File(...),

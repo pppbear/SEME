@@ -44,7 +44,6 @@ app.add_middleware(
 CORS策略说明：
 1. allow_origins: 生产环境应严格指定前端地址（如["https://your-domain.com"]）
 2. allow_credentials: 为True时前端才能接收Set-Cookie
-3. TODO: 开发环境可用通配符"*"，但生产环境必须限制
 """
 
 # ------------------------- 路由注册 -------------------------

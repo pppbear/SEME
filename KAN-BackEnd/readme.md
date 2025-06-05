@@ -66,6 +66,10 @@ uvicorn main:app --host 0.0.0.0 --port 8003 --reload
 cd ../predict_service
 uvicorn main:app --host 0.0.0.0 --port 8004 --reload
 
+# 启动 analyze_service
+cd ../analyze_service
+uvicorn main:app --host 0.0.0.0 --port 8005 --reload
+
 ```
 
 ### 3. 访问接口
@@ -74,9 +78,11 @@ uvicorn main:app --host 0.0.0.0 --port 8004 --reload
 - 模型对比服务默认端口：8002
 - 栅格数据服务默认端口：8003
 - 数据预测服务默认端口：8004
+- 关键特征值分析默认端口：8005
 
 ## 目录结构
 ```
+analyze_service      # 关键特征值分析服务
 api_gateway/         # API 网关服务
 auth_service/        # 认证服务
 common_db/           # 共享数据库与工具

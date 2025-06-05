@@ -58,7 +58,9 @@ class Settings(BaseSettings):
     # JWT 签名算法（HS256 表示 HMAC-SHA256）
     # TODO:生产环境建议使用 RS256（非对称加密）
 
-    # 添加其他可能的配置，如模型路径等
+    # 模型路径
+    MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "crud", "models") # 模型目录路径
+    KAN_MODEL_DIR: str = os.path.join(MODEL_DIR, "kan") # KAN模型目录
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）

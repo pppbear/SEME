@@ -201,3 +201,46 @@ async def predict_proxy(path: str, request: Request):
                 media_type=response.headers.get("content-type", "text/plain")
             )
 
+# 特征关键值分析服务代理
+@api_router.api_route("/analyze/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
+async def analyze_proxy(path: str, request: Request):
+    """特征关键值分析服务代理
+    功能：将/analyze开头的请求转发到特征关键值分析服务
+    实现逻辑：
+        1. 动态拼接目标URL（从配置获取ANALYZE_SERVICE_URL）
+        2. 使用httpx异步转发原始请求
+        3. 将响应原样返回给客户端
+    参数：
+        - path: URL路径的通配符
+        - request: 原始请求对象（自动注入）
+    """
+    async with httpx.AsyncClient() as client:
+        # 拼接目标地址，例如：http://analyze_service:8005/api/v1/analyze
+        url = f"{settings.ANALYZE_SERVICE_URL}/api/v1/analyze/{path}"
+
+        # 转换FastAPI Request为httpx请求
+        headers = dict(request.headers)
+
+        # 获取请求体
+        body = await request.body() if request.method in ["POST", "PUT"] else None
+        
+        # 转发请求（保留方法、头、参数、体）
+        response = await client.request(
+            method=request.method,
+            url=url,
+            headers=headers,
+            content=body,
+            params=dict(request.query_params)
+        )
+
+        # 健壮处理响应内容
+        try:
+            content = response.json()
+            return JSONResponse(content=content, status_code=response.status_code)
+        except Exception:
+            return Response(
+                content=response.text,
+                status_code=response.status_code,
+                media_type=response.headers.get("content-type", "text/plain")
+            )
+
