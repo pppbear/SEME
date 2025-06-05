@@ -1,0 +1,13 @@
+容积率
+POI商务
+NDVI_MEAN
+POI生活
+建筑密
+POI医疗
+Land03
+SUM_1
+Subway_m
+不透水
+car_road_m
+PNT_COUNT
+POI总数
