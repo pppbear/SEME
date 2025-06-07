@@ -230,7 +230,8 @@ async def analyze_proxy(path: str, request: Request):
             url=url,
             headers=headers,
             content=body,
-            params=dict(request.query_params)
+            params=dict(request.query_params),
+            timeout=60
         )
 
         # 健壮处理响应内容

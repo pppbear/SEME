@@ -3,8 +3,8 @@ from fastapi.responses import JSONResponse
 from typing import List
 import json
 import os
-from analyze_service.app.schemas.analyze import KeyFeature, DependentKeyFeatureAnalyzeResponse
-from analyze_service.app.crud.analyze import analyze_key_features_from_df
+from app.schemas.analyze import KeyFeature, DependentKeyFeatureAnalyzeResponse
+from app.service.analyze import analyze_key_features_from_df
 from common_utils.file import read_excel_file
 
 analyze_router = APIRouter()

@@ -5,7 +5,7 @@ from typing import List
 import json
 
 from app.schemas.data import DataResponse, DataRow
-from app.crud.data import load_data_by_target
+from app.service.data import load_data_by_target
 import os
 
 data_router = APIRouter()

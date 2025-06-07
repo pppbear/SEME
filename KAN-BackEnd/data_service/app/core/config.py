@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     # TODO:生产环境建议使用 RS256（非对称加密）
 
     # 栅格数据目录
-    DATA_PATH: str = os.path.join(os.path.dirname(__file__), "..", "crud", "data", "data.xlsx") # 数据目录路径
+    DATA_PATH: str = os.path.join(os.path.dirname(__file__), "..", "service", "data", "data.xlsx") # 数据目录路径
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）

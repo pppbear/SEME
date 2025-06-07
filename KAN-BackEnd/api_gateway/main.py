@@ -52,6 +52,7 @@ print(f"API路由注册完成，前缀: {settings.API_V1_STR}")
 print(f"认证转发路由: {settings.API_V1_STR}/auth/*")
 print(f"模型对比转发路由: {settings.API_V1_STR}/compare/*")
 print(f"栅格数据转发路由: {settings.API_V1_STR}/data/*")
+print(f"栅格数据转发路由: {settings.API_V1_STR}/analyze/*")
 """
 路由挂载说明：
 - api_router: 来自routes.py的所有路由

@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     # TODO:生产环境建议使用 RS256（非对称加密）
 
     # 模型路径
-    MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "crud", "models") # 模型目录路径
+    MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "service", "models") # 模型目录路径
     MLP_MODEL_DIR: str = os.path.join(MODEL_DIR, "mlp") # MLP模型目录
     RF_MODEL_DIR: str = os.path.join(MODEL_DIR, "rf")   # RF模型目录
     KAN_MODEL_DIR: str = os.path.join(MODEL_DIR, "kan") # KAN模型目录

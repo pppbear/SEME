@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     """
 
     # >>>>>>>>>>>>>>> API 基础配置 <<<<<<<<<<<<<<<<
-    API_V1_STR: str = "/api/v1/predict"
+    API_V1_STR: str = "/api/v1/analyze"
     # API 接口前缀，用于路由分组和文档生成
 
     # 简化密钥，确保两个服务使用完全相同的字符串
@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     # TODO:生产环境建议使用 RS256（非对称加密）
 
     # 模型路径
-    MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "crud", "models") # 模型目录路径
+    MODEL_DIR: str = os.path.join(os.path.dirname(__file__), "..", "service", "models") # 模型目录路径
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）

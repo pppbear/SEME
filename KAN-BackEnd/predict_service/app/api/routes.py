@@ -4,7 +4,7 @@ from typing import List
 import json
 import os
 from app.schemas.predict import PredictResponse
-from app.crud.predict import predict_from_excel
+from app.service.predict import predict_from_excel
 from common_utils.file import read_excel_file
 
 predict_router = APIRouter()
