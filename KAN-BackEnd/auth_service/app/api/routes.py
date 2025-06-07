@@ -8,6 +8,7 @@ from app.core import security # 安全相关工具
 from app.core.config import settings # 配置管理
 from app.schemas.token import Token # Token响应模型
 from app.schemas.user import User, UserCreate, UserUpdate, EmailVerification, UserLogin, PasswordReset # 用户模型
+from app.schemas.auth import AuthResponse
 from common_db.models.user import User as UserModel # 数据库用户模型
 from app.crud.user import (
     create_user_with_verification,
@@ -40,10 +41,10 @@ async def login_for_access_token(
     print(f"尝试验证用户: {form_data.username}")
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
-        return {
-            "code": 401, 
-            "message": "用户名/邮箱或密码不正确"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="用户名/邮箱或密码不正确"
+        )
     
     print(f"用户验证成功: {user.username}, ID: {user.id}")
     # 生成令牌过期时间（从配置读取）
@@ -71,16 +72,17 @@ async def login_for_access_token(
     
     # 返回标准格式响应
     print(f"生成令牌成功，过期时间: {expire}")
-    return {
-        "code": 200,
-        "message": "success",
-        "data": {
+
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="success",
+        data={
             "token": access_token,
             "expire": expire,
             "role": role,
             "username": user.username
         }
-    }
+    )
 
 
 @auth_router.post("/oauth-login", 
@@ -95,11 +97,11 @@ async def oauth_login(
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         # 使用统一的错误响应格式
-        return {
-            "code": 401,
-            "message": "用户名/邮箱或密码不正确"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="用户名/邮箱或密码不正确"
+        )
+        
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     
     # 使用共享库生成访问令牌
@@ -116,17 +118,17 @@ async def oauth_login(
     expire = (datetime.utcnow() + access_token_expires).timestamp()
     
     # 返回标准格式响应
-    return {
-        "code": 200,
-        "message": "success",
-        "data": {
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="success",
+        data={
             "token": access_token,
             "expire": expire,
             "role": role,
             "username": user.username
         }
-    }
-
+    )
+    
 
 @auth_router.post("/register/send-code",
                  summary="发送注册验证码",
@@ -144,25 +146,25 @@ async def send_register_code(
     user = get_user_by_email(db, email=email_data.email)
     if user:
         # 使用统一的错误响应格式
-        return {
-            "code": 409,
-            "message": "该邮箱已被注册"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="该邮箱已被注册"
+        )
+        
     # 发送验证码
     success = send_verification_code(email_data.email, "register")
     if not success:
         # 使用统一的错误响应格式
-        return {
-            "code": 503,
-            "message": "验证码发送失败，请稍后重试"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, 
+            detail="验证码发送失败，请稍后重试"
+        )
+        
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="验证码已发送至邮箱，有效期为10分钟"
+    )
     
-    return {
-        "code": 200,
-        "message": "验证码已发送至邮箱，有效期为10分钟"
-    }
-
 
 @auth_router.post("/register", 
                  summary="用户注册",
@@ -182,29 +184,29 @@ async def register_user(
     existing_user = get_user_by_email(db, email=user_in.email)
     if existing_user:
         # 使用统一的错误响应格式
-        return {
-            "code": 409,
-            "message": "该邮箱已被注册"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, 
+            detail="该邮箱已被注册"
+        )
+        
     # 检查用户名是否已存在
     existing_username = get_user_by_username(db, username=user_in.username)
     if existing_username:
         # 使用统一的错误响应格式
-        return {
-            "code": 409,
-            "message": "该用户名已被使用"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, 
+            detail="该用户名已被使用"
+        )
+        
     # 创建用户（包含验证码验证）
     user = create_user_with_verification(db, user_in)
     if not user:
         # 使用统一的错误响应格式
-        return {
-            "code": 403,
-            "message": "验证码无效或已过期，请重新获取"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, 
+            detail="验证码无效或已过期，请重新获取"
+        )
+        
     # 转换用户对象为API响应格式
     user_data = {
         "id": user.id,
@@ -214,12 +216,14 @@ async def register_user(
         "created_at": user.created_at.isoformat() if hasattr(user, 'created_at') and user.created_at else None
     }
     
-    return {
-        "code": 200,
-        "message": "用户注册成功",
-        "data": user_data
-    }
-
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="验证码已发送至邮箱，有效期为10分钟",
+        data={
+            "data": user_data
+        }
+    )
+    
 
 @auth_router.post("/reset-password/send-code",
                 summary="发送密码重置验证码",
@@ -237,25 +241,25 @@ async def send_reset_password_code(
     user = get_user_by_email(db, email=email_data.email)
     if not user:
         # 使用统一的错误响应格式
-        return {
-            "code": 404,
-            "message": "该邮箱未注册"
-        }
-    
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="该邮箱未注册"
+        )
+        
     # 发送验证码
     success = send_verification_code(email_data.email, "reset_password")
     if not success:
         # 使用统一的错误响应格式
-        return {
-            "code": 503,
-            "message": "验证码发送失败，请稍后重试"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, 
+            detail="验证码发送失败，请稍后重试"
+        )
+        
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="验证码已发送至邮箱，有效期为10分钟"
+    )
     
-    return {
-        "code": 200,
-        "message": "验证码已发送至邮箱，有效期为10分钟"
-    }
-
 
 @auth_router.post("/reset-password",
                 summary="重置密码",
@@ -273,12 +277,12 @@ async def reset_user_password(
     user = reset_password(db, reset_data)
     if not user:
         # 使用统一的错误响应格式
-        return {
-            "code": 400,
-            "message": "密码重置失败，请确认信息正确后重试"
-        }
-    
-    return {
-        "code": 200,
-        "message": "密码重置成功，请使用新密码登录"
-    }
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="密码重置失败，请确认信息正确后重试"
+        )
+        
+    return AuthResponse(
+        code=status.HTTP_200_OK,
+        message="密码重置成功，请使用新密码登录"
+    )

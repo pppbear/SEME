@@ -1,5 +1,6 @@
 from typing import List
 from pydantic import BaseModel
+from fastapi import status
 
 class CompareResult(BaseModel):
     """单个因变量的预测结果和指标模型"""
@@ -17,6 +18,6 @@ class CompareResult(BaseModel):
 
 class CompareResponse(BaseModel):
     """预测比较服务的响应模型"""
-    code: int = 200
+    code: int = status.HTTP_200_OK
     message: str = "success"
     data: List[CompareResult]

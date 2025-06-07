@@ -58,7 +58,8 @@ async def auth_proxy(path: str, request: Request):
             url=url,
             headers=headers,
             content=body,
-            params=dict(request.query_params)
+            params=dict(request.query_params),
+            timeout=60
         )
 
         # 健壮处理响应内容
@@ -101,7 +102,8 @@ async def compare_proxy(path: str, request: Request):
             url=url,
             headers=headers,
             content=body,
-            params=dict(request.query_params)
+            params=dict(request.query_params),
+            timeout=60
         )
 
         # 健壮处理响应内容
@@ -144,7 +146,8 @@ async def data_proxy(path: str, request: Request):
             url=url,
             headers=headers,
             content=body,
-            params=dict(request.query_params)
+            params=dict(request.query_params),
+            timeout=60
         )
 
         # 健壮处理响应内容
@@ -187,7 +190,8 @@ async def predict_proxy(path: str, request: Request):
             url=url,
             headers=headers,
             content=body,
-            params=dict(request.query_params)
+            params=dict(request.query_params),
+            timeout=60
         )
 
         # 健壮处理响应内容
@@ -231,7 +235,7 @@ async def analyze_proxy(path: str, request: Request):
             headers=headers,
             content=body,
             params=dict(request.query_params),
-            timeout=60
+            timeout=90
         )
 
         # 健壮处理响应内容

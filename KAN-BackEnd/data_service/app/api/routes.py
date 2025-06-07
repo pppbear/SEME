@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Query
+from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Query, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
@@ -18,9 +18,19 @@ async def get_data(
     接收目标因变量，返回栅格数据。
     """
     if data not in ['nighttime_', 'lst_day_c', 'lst_night_c']:
-        raise HTTPException(status_code=400, detail="目标因变量不合法")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="目标因变量不合法"
+        )
     try:
+        # 加载数据
         data = load_data_by_target(data)
+
+        #返回数据
         return DataResponse(data=[DataRow(**item) for item in data])
+    
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+            detail=str(e)
+        )

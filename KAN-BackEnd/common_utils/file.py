@@ -1,5 +1,5 @@
 import pandas as pd
-from fastapi import UploadFile, HTTPException
+from fastapi import UploadFile, HTTPException, status
 from typing import List
 import os
 import tempfile
@@ -19,16 +19,25 @@ async def read_excel_file(file: UploadFile) -> pd.DataFrame:
     Raises:
         HTTPException: 当文件读取失败时抛出异常
     """
-    if not file:
-        raise HTTPException(status_code=400, detail="未提供文件")
+    if not file.file:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="未提供文件"
+        )
         
     if not file.filename:
-        raise HTTPException(status_code=400, detail="文件名不能为空")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="文件名不能为空"
+        )
         
     # 检查文件扩展名
     file_ext = os.path.splitext(file.filename)[1].lower()
     if file_ext not in ['.xlsx', '.xls']:
-        raise HTTPException(status_code=400, detail="只支持Excel文件(.xlsx, .xls)")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="只支持Excel文件(.xlsx, .xls)"
+        )
     
     # 生成唯一的临时文件名
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -49,16 +58,28 @@ async def read_excel_file(file: UploadFile) -> pd.DataFrame:
             df = pd.read_excel(temp_file.name)
             
             if df.empty:
-                raise HTTPException(status_code=400, detail="Excel文件为空")
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST, 
+                    detail="Excel文件为空"
+                )
                 
             return df
             
     except pd.errors.EmptyDataError:
-        raise HTTPException(status_code=400, detail="Excel文件为空")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Excel文件为空"
+        )
     except pd.errors.ParserError:
-        raise HTTPException(status_code=400, detail="Excel文件格式错误")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Excel文件格式错误"
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"读取Excel文件失败: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail=f"读取Excel文件失败: {str(e)}"
+        )
     finally:
         # 清理临时文件
         try:

@@ -3,7 +3,7 @@ auto_save: true
 base_fun_name: silu
 ckpt_path: D:\vscode\KAN-BackEnd\predict_service\app\core\..\service\models\kan/model
 device: cpu
-grid: 5
+grid: 6
 grid_eps: 0.02
 grid_range:
 - -1
