@@ -1,0 +1,13 @@
+容积率
+PNT_COUNT
+NDVI_MEAN
+POI商务
+POI科教
+POI政府
+POI餐饮
+POI公司
+Land505
+car_road_m
+POI总数
+POI医疗
+Land03

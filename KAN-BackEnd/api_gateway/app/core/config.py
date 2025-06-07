@@ -65,6 +65,12 @@ class Settings(BaseSettings):
     DATA_SERVICE_URL: str = "http://localhost:8003"
     # 数据服务地址
 
+    PREDICT_SERVICE_URL: str = "http://localhost:8004"
+    # 数据预测服务地址
+
+    ANALYZE_SERVICE_URL: str = "http://localhost:8005"
+    # 特征关键值分析服务地址
+
 
 # 全局配置实例
 settings = Settings() 

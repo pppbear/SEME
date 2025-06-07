@@ -109,29 +109,6 @@ def reset_password(db: Session, reset_data: PasswordReset) -> Optional[User]:
     return user
 
 
-def update_user(db: Session, db_user: User, user_in: UserUpdate) -> User:
-    """更新用户信息
-    特性：
-      - 支持部分更新（仅修改传入的字段）
-      - 自动处理密码更新时的哈希化
-    """
-    # 将输入数据转换为字典，排除未设置的字段
-    update_data = user_in.dict(exclude_unset=True)
-
-    # 特殊处理密码字段
-    if "password" in update_data and update_data["password"]:
-        update_data["hashed_password"] = get_password_hash(update_data.pop("password"))
-    
-    # 动态更新字段
-    for field, value in update_data.items():
-        setattr(db_user, field, value)
-    
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
-
 def authenticate_user(db: Session, username_or_email: str, password: str) -> Optional[User]:
     """用户认证（支持用户名或邮箱登录）
     流程：
