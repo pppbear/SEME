@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any, Union, Optional
 from jose import jwt
 from passlib.context import CryptContext
-from app.core.config import settings
+from auth_service.app.core.config import settings
 
 # 导入共享认证库
 import sys

@@ -3,8 +3,8 @@ from fastapi.responses import JSONResponse
 from typing import List
 import json
 import os
-from app.schemas.predict import PredictResponse
-from app.service.predict import predict_from_excel
+from predict_service.app.schemas.predict import PredictResponse
+from predict_service.app.service.predict import predict_from_excel
 from common_utils.file import read_excel_file
 
 predict_router = APIRouter()

@@ -3,21 +3,21 @@ from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta, datetime
 from sqlalchemy.orm import Session
 
-from app.api import deps # 依赖注入模块
-from app.core import security # 安全相关工具
-from app.core.config import settings # 配置管理
-from app.schemas.token import Token # Token响应模型
-from app.schemas.user import User, UserCreate, UserUpdate, EmailVerification, UserLogin, PasswordReset # 用户模型
-from app.schemas.auth import AuthResponse
+from auth_service.app.api import deps # 依赖注入模块
+from auth_service.app.core import security # 安全相关工具
+from auth_service.app.core.config import settings # 配置管理
+from auth_service.app.schemas.token import Token # Token响应模型
+from auth_service.app.schemas.user import User, UserCreate, UserUpdate, EmailVerification, UserLogin, PasswordReset # 用户模型
+from auth_service.app.schemas.auth import AuthResponse
 from common_db.models.user import User as UserModel # 数据库用户模型
-from app.crud.user import (
+from auth_service.app.crud.user import (
     create_user_with_verification,
     get_user_by_email,
     authenticate_user,
     reset_password,
     get_user_by_username
 )
-from app.utils.email import send_verification_code
+from auth_service.app.utils.email import send_verification_code
 
 # 创建API路由实例
 auth_router = APIRouter()
@@ -218,7 +218,7 @@ async def register_user(
     
     return AuthResponse(
         code=status.HTTP_200_OK,
-        message="验证码已发送至邮箱，有效期为10分钟",
+        message="success",
         data={
             "data": user_data
         }

@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import json
 
-from app.schemas.data import DataResponse, DataRow
-from app.service.data import load_data_by_target
+from data_service.app.schemas.data import DataResponse, DataRow
+from data_service.app.service.data import load_data_by_target
 import os
 
 data_router = APIRouter()

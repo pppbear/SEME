@@ -1,10 +1,10 @@
 from typing import Optional, Union
 from sqlalchemy.orm import Session
 
-from app.core.security import get_password_hash, verify_password
+from auth_service.app.core.security import get_password_hash, verify_password
 from common_db.models.user import User
-from app.schemas.user import UserCreate, UserUpdate, PasswordReset
-from app.utils.email import verify_code
+from auth_service.app.schemas.user import UserCreate, UserUpdate, PasswordReset
+from auth_service.app.utils.email import verify_code
 
 
 def get_user(db: Session, id: int) -> Optional[User]:

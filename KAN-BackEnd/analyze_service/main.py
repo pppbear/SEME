@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os.path as op
 
-from app.api.routes import analyze_router
-from app.core.config import settings
+from analyze_service.app.api.routes import analyze_router
+from analyze_service.app.core.config import settings
 
 # 调试信息
 print("===== 关键特征值分析服务启动 =====")

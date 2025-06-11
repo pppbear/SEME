@@ -5,11 +5,11 @@ from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
-from app.core.config import settings
-from app.db.session import SessionLocal # 数据库会话工厂
+from auth_service.app.core.config import settings
+from auth_service.app.db.session import SessionLocal # 数据库会话工厂
 from common_db.models.user import User # 数据库用户模型
-from app.schemas.token import TokenPayload # JWT负载模型
-from app.crud.user import get_user # 用户查询方法
+from auth_service.app.schemas.token import TokenPayload # JWT负载模型
+from auth_service.app.crud.user import get_user # 用户查询方法
 
 # 定义OAuth2密码模式（令牌获取URL指向登录接口）
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/login")

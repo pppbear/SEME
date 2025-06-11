@@ -5,7 +5,7 @@ from common_utils.preprocess import preprocess_for_analyze
 import logging
 import torch
 import numpy as np
-from ..core.config import settings
+from analyze_service.app.core.config import settings
 # 配置日志
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("predictor_utils")
@@ -14,7 +14,7 @@ logger = logging.getLogger("predictor_utils")
 def analyze_key_features_from_df(
     df: pd.DataFrame,
     target: str,
-    n_epochs: int = 200,
+    n_epochs: int = 100,
     hidden_dim: int = 8,
     grid: int = 5,
     k: int = 3,

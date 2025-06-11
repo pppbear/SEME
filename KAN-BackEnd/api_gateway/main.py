@@ -7,8 +7,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import api_router # 主路由文件
-from app.core.config import settings # 系统配置
+from api_gateway.app.api.routes import api_router # 主路由文件
+from api_gateway.app.core.config import settings # 系统配置
 
 # 调试信息
 print("===== API网关启动 =====")

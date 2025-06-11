@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os.path as op
 
-from app.api.routes import compare_router
-from app.core.config import settings
+from compare_service.app.api.routes import compare_router
+from compare_service.app.core.config import settings
 
 # 调试信息
 print("===== 模型对比服务启动 =====")

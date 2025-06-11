@@ -9,11 +9,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os.path as op
 
-from app.api.routes import auth_router
-from app.core.config import settings
+from auth_service.app.api.routes import auth_router
+from auth_service.app.core.config import settings
 
-from app.db.base import Base
-from app.db.session import engine
+from auth_service.app.db.base import Base
+from auth_service.app.db.session import engine
 
 # 调试信息
 print("===== 认证服务启动 =====")

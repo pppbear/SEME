@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "c77c95a1-4947-4cb2-a271-a313d3854e0b",
+		"name": "Integration Level Test of Research and Application of Urban  Land Use Change Detection ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45740827",
+		"_collection_link": "https://powderbluex.postman.co/workspace/powderblueX's-Workspace~3fd64bff-848c-4932-8249-88d74a1ae851/collection/45740827-c77c95a1-4947-4cb2-a271-a313d3854e0b?action=share&source=collection_link&creator=45740827"
+	},
+	"item": [
+		{
+			"name": "auth_service_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/auth/login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"xyy\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/auth/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "xyy",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "127.0.0.1:8000/api/v1/auth/register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"powderblue370@2925.com\",\r\n  \"username\": \"powderblue370\",\r\n  \"password\": \"powderblue123123123123\",\r\n  \"verification_code\": \"700861\"\r\n}"
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/auth/register",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "xyy",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "127.0.0.1:8000/api/v1/auth/register/send-code",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"powderblue370@2925.com\"\r\n}"
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/auth/register/send-code",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register",
+								"send-code"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "xyy",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "127.0.0.1:8000/api/v1/auth/reset-password/send-code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"powderblue370@2925.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/auth/reset-password/send-code",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password",
+								"send-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "127.0.0.1:8000/api/v1/auth/reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"powderblue370@2925.com\",\r\n  \"new_password\": \"powderblue370powderblue370\",\r\n  \"verification_code\": \"629563\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/auth/reset-password",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api_gateway_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/health",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/health",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"health"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "xyy",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compare_service_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/compare/model_compare",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Python_files/KAN-BackEnd-Test/test/system_level/test_sample.xlsx"
+								},
+								{
+									"key": "dependent_name",
+									"value": "nighttime_",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/compare/model_compare",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"compare",
+								"model_compare"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "data_service_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/data/get_data?data=nighttime_st",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/data/get_data?data=nighttime_",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"data",
+								"get_data"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "nighttime_"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "predict_service_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/predict/dependent_predict",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Python_files/KAN-BackEnd-Test/test/system_level/test_sample.xlsx"
+								},
+								{
+									"key": "dependent_name",
+									"value": "lst_day_c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/predict/dependent_predict",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"predict",
+								"dependent_predict"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "nighttime_",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analyze_service_interface_test",
+			"item": [
+				{
+					"name": "127.0.0.1:8000/api/v1/analyze/dependent_feature_analyze",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Python_files/KAN-BackEnd-Test/test/system_level/test_sample.xlsx"
+								},
+								{
+									"key": "dependent_name",
+									"value": "lst_night_c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/api/v1/analyze/dependent_feature_analyze",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"analyze",
+								"dependent_feature_analyze"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "nighttime_",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

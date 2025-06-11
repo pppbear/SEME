@@ -1,6 +1,7 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
 from pydantic import AnyHttpUrl, BaseSettings, validator, EmailStr
+import os
 
 
 class Settings(BaseSettings):
@@ -79,6 +80,12 @@ class Settings(BaseSettings):
     SMTP_USE_SSL: bool = True  # 使用SSL连接
     SMTP_USERNAME: str = "2784892686@qq.com"  # SMTP登录用户名
     SMTP_PASSWORD: str = "lftkwqcvmxaedhbg"  # SMTP登录密码
+
+    # >>>>>>>>>>>>>>> Redis 配置 <<<<<<<<<<<<<<<<
+    REDIS_HOST: str = os.getenv("REDIS_HOST", "localhost")
+    REDIS_PORT: int = int(os.getenv("REDIS_PORT", 6379))
+    REDIS_DB: int = int(os.getenv("REDIS_DB", 0))
+    REDIS_PASSWORD: str = os.getenv("REDIS_PASSWORD", None)
 
 
 # 全局配置实例（其他模块通过 from app.core.config import settings 使用）

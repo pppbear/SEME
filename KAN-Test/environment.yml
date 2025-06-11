@@ -1,0 +1,26 @@
+name: kan-test-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+      - pytest
+      - requests
+      - selenium
+      - torch
+      - pandas
+      - scikit-learn
+      - openpyxl
+      - numpy
+      - fastapi
+      - uvicorn
+      - sqlalchemy
+      - pydantic
+      - joblib
+      - loguru
+      - httpx 
+      - pytest-asyncio
+      - pytest-mock
+      - pytest-cov
