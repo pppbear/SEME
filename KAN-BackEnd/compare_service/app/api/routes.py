@@ -3,8 +3,8 @@ from fastapi.responses import JSONResponse
 from typing import List
 import json
 
-from app.schemas.compare import CompareResponse, CompareResult
-from app.service.compare import analyze_and_predict
+from compare_service.app.schemas.compare import CompareResponse, CompareResult
+from compare_service.app.service.compare import analyze_and_predict
 from common_utils.file import read_excel_file
 
 compare_router = APIRouter()

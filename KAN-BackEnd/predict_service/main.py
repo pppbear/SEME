@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os.path as op
 
-from app.api.routes import predict_router
-from app.core.config import settings
+from predict_service.app.api.routes import predict_router
+from predict_service.app.core.config import settings
 
 # 调试信息
 print("===== 数据预测服务启动 =====")

@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-from app.core.config import settings
+from data_service.app.core.config import settings
 
 def dms_str_to_float(dms_str):
     match = re.match(r"(\d+)°\s*(\d+)'[\s]*(\d+(?:\.\d+)?)\"?\s*([NSEW])", dms_str.strip())

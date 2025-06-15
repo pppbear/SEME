@@ -2,11 +2,11 @@ import pandas as pd
 import os
 import logging
 from typing import List
-from app.schemas.predict import PredictResponse
+from predict_service.app.schemas.predict import PredictResponse
 from common_utils.preprocess import preprocess_for_model
-from app.core.config import settings
+from predict_service.app.core.config import settings
 from common_utils.kan.MultKAN import KAN
-from .model_cache import get_kan_model_and_scaler
+from predict_service.app.service.model_cache import get_kan_model_and_scaler
 import torch
 import numpy as np
 

@@ -7,12 +7,12 @@ import torch
 import torch.nn as nn
 import joblib
 from typing import List
-from ..core.config import settings
-from ..schemas.compare import CompareResult
+from compare_service.app.core.config import settings
+from compare_service.app.schemas.compare import CompareResult
 from common_utils.kan.MultKAN import KAN
 import pickle
 import sys
-from .model_cache import MLPRegressor, get_mlp_model, get_scaler, get_rf_model, get_kan_model_and_scaler
+from compare_service.app.service.model_cache import MLPRegressor, get_mlp_model, get_scaler, get_rf_model, get_kan_model_and_scaler
 from common_utils.preprocess import preprocess_for_model
 from concurrent.futures import ThreadPoolExecutor
 # 配置日志

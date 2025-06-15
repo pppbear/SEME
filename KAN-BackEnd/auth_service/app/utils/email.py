@@ -6,7 +6,8 @@ from email.mime.multipart import MIMEMultipart
 from typing import Dict, Optional
 from datetime import datetime, timedelta
 
-from app.core.config import settings
+from auth_service.app.core.config import settings
+from auth_service.app.utils.redis_client import redis_client
 
 # 存储验证码的字典，格式: {email: {"code": "123456", "type": "register", "expiry": datetime}}
 verification_codes: Dict[str, Dict[str, any]] = {}
@@ -16,36 +17,20 @@ def generate_verification_code(length: int = 6) -> str:
     return ''.join(random.choices(string.digits, k=length))
 
 def save_verification_code(email: str, code: str, code_type: str) -> None:
-    """保存验证码到内存中，并设置过期时间"""
-    # 设置验证码有效期为10分钟
-    expiry = datetime.now() + timedelta(minutes=10)
-    verification_codes[email] = {
-        "code": code,
-        "type": code_type,  # "register" 或 "reset_password"
-        "expiry": expiry
-    }
+    """保存验证码到Redis，并设置过期时间"""
+    key = f"verify:{code_type}:{email}"
+    redis_client.setex(key, 600, code)
 
 def verify_code(email: str, provided_code: str, code_type: str) -> bool:
     """验证用户提供的验证码是否正确"""
-    if email not in verification_codes:
+    key = f"verify:{code_type}:{email}"
+    stored_code = redis_client.get(key)
+    if stored_code is None:
         return False
-    
-    stored_data = verification_codes[email]
-    if stored_data["type"] != code_type:
+    if stored_code != provided_code:
         return False
-    
-    # 检查是否过期
-    if datetime.now() > stored_data["expiry"]:
-        # 移除过期的验证码
-        del verification_codes[email]
-        return False
-    
-    # 检查验证码是否匹配
-    if stored_data["code"] != provided_code:
-        return False
-    
-    # 验证成功后移除验证码，防止重复使用
-    del verification_codes[email]
+    # 校验成功后删除验证码，防止复用
+    redis_client.delete(key)
     return True
 
 def send_email(recipient: str, subject: str, body: str) -> bool:

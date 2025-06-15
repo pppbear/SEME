@@ -23,6 +23,7 @@
 - loguru（日志输出）
 - KAN（神经算子模型，compare_service专用）
 - SQLite（默认数据库）
+- Redis（键值型内存数据库）
 
 ## 环境依赖
 所有依赖已在 `environment.yml` 文件中列出，使用 conda 管理环境。
@@ -72,7 +73,21 @@ uvicorn main:app --host 0.0.0.0 --port 8005 --reload
 
 ```
 
-### 3. 访问接口
+### 3. 启动 Redis
+
+1. 下载安装
+
+   - windows版本readis下载（GitHub）：https://github.com/tporadowski/redis/releases
+   - 官网下载（无Windows版本）： https://redis.io/download
+
+2. 启动 Redis
+
+   进入到 `redis` 解压所在文件夹中（或配置好环境），打开 `cmd` ，运行以下命令：
+   ```bash
+   redis-server.exe redis.windows.conf
+   ```
+
+### 4. 访问接口
 - API 网关默认端口：8000
 - 认证服务默认端口：8001
 - 模型对比服务默认端口：8002

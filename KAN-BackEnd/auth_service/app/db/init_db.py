@@ -2,10 +2,10 @@ import os
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 
-from app.crud.user import create_user, get_user_by_email
-from app.schemas.user import UserCreate
+from auth_service.app.crud.user import create_user, get_user_by_email
+from auth_service.app.schemas.user import UserCreate
 from common_db.utils.db_utils import Base, engine, SessionLocal
-from app.core.config import settings
+from auth_service.app.core.config import settings
 from common_db.models.user import User  # 确保模型被注册
 
 

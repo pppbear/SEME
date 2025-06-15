@@ -6,7 +6,7 @@ import os
 import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 # 配置日志
 logging.basicConfig(level=logging.INFO)

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse, Response
 import httpx
-from app.core.config import settings
+from api_gateway.app.core.config import settings
 
 # 创建API路由实例，用于组织所有接口
 api_router = APIRouter()

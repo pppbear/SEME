@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os.path as op
 
-from app.api.routes import data_router
-from app.core.config import settings
+from data_service.app.api.routes import data_router
+from data_service.app.core.config import settings
 
 # 调试信息
 print("===== 栅格数据服务启动 =====")
