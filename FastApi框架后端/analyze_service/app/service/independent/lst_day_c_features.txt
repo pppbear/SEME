@@ -1,0 +1,13 @@
+MEAN
+SUM
+不透水
+容积率
+Land01
+NDVI_MEAN
+Land50234
+Land03
+建筑密
+POI科教
+POI政府
+POI生活
+LENGTH_1
