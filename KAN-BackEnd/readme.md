@@ -108,3 +108,5 @@ environment.yml      # 环境依赖文件
 readme.md            # 项目说明
 ```
 
+plus：可直接使用start_all_services.bat脚本进行启动
+      若未使用conda环境，删除脚本中的&& conda activate kan-backend即可
